@@ -1,27 +1,30 @@
-local a=game:GetService'HttpService'local b=game:GetService'Players'local c=game
-:GetService'ProximityPromptService'local d=game:GetService'ReplicatedStorage'
-local e=game:GetService'RunService'local f=game:GetService'SoundService'local g=
-game:GetService'Workspace'local h=game:GetService'ContentProvider'local i=game:
-GetService'CoreGui'do if getgenv().doors then return end getgenv().doors=true
-end do local j j=hookfunction(h.PreloadAsync,function(k,l,m)if table.find(l,i)
-then local n=function(n,o)if n:match'^rbxasset://'or n:match'^rbxthumb://'then
-return m(n,o)end end warn'Anticheat Check Detected'return j(k,l,n)end return j(k
-,l,m)end)end local j=
-[[https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/]]local k=
-loadstring(game:HttpGet(j..'Library.lua'))()local l=loadstring(game:HttpGet(j..
-'addons/SaveManager.lua'))()local m=loadstring(game:HttpGet(j..
-'addons/ThemeManager.lua'))()local n=b.LocalPlayer local o=g.CurrentCamera local
-p=Instance.new'Sound'local q=Instance.new'PointLight'local r=Instance.new
-'SurfaceLight'local s=d:WaitForChild'GameData'local t=d:WaitForChild'Bricks'
-local u={PadlockHint=t:WaitForChild'PadlockHint',EngageMinigame=t:WaitForChild
-'EngageMinigame',ClutchHeartbeat=t:WaitForChild'ClutchHeartbeat',Screech=t:
-WaitForChild'Screech'}local v={}local w=0 local x=function(x,y)k:Notify(x)if y
-and Toggles.SOUND_NOTIFIER.Value then p.TimePosition=0.25 p:Play()end end local
-y do y={}y.attached={}y.__index=y local z=Vector3.new(1,0,1)function y.new(A)
-local B=setmetatable({instance=A,destructed=false},y)B._destroyListener=B.
-instance.AncestryChanged:Connect(function(C,D)if D==nil then B:destroy()end end)
-return B:constructor(A)end function y.constructor(A,B)A.root=B:WaitForChild(
-'HumanoidRootPart',5)A.humanoid=B:WaitForChild('Humanoid',5)y.attached[B]=A task
+local a=game:GetService'HttpService'
+local b=game:GetService'Players'
+local c=game:GetService'ProximityPromptService'
+local d=game:GetService'ReplicatedStorage'
+local e=game:GetService'RunService'
+local f=game:GetService'SoundService'
+local g=game:GetService'Workspace'
+local h=game:GetService'ContentProvider'
+local i=game:GetService'CoreGui'do if getgenv().doors then return end getgenv().doors=true
+end do 
+local j j=hookfunction(h.PreloadAsync,function(k,l,m)if table.find(l,i) then 
+local n=function(n,o)if n:match'^rbxasset://'or n:match'^rbxthumb://'then return m(n,o)end end warn'Anticheat Check Detected'return j(k,l,n)end return j(k,l,m)end)end 
+local j=[[https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/]]
+local k=loadstring(game:HttpGet(j..'Library.lua'))()local l=loadstring(game:HttpGet(j..'addons/SaveManager.lua'))()
+local m=loadstring(game:HttpGet(j..'addons/ThemeManager.lua'))()
+local n=b.LocalPlayer 
+local o=g.CurrentCamera 
+local p=Instance.new'Sound'local q=Instance.new'PointLight'local r=Instance.new'SurfaceLight'
+local s=d:WaitForChild'GameData'local t=d:WaitForChild'Bricks'
+local u={PadlockHint=t:WaitForChild'PadlockHint',EngageMinigame=t:WaitForChild'EngageMinigame',ClutchHeartbeat=t:WaitForChild'ClutchHeartbeat',Screech=t:WaitForChild'Screech'}
+local v={}
+local w=0 
+local x=function(x,y)k:Notify(x)if y and Toggles.SOUND_NOTIFIER.Value then p.TimePosition=0.25 p:Play()end end 
+local y do y={}y.attached={}y.__index=y 
+local z=Vector3.new(1,0,1)function y.new(A)
+local B=setmetatable({instance=A,destructed=false},y)B._destroyListener=B.instance.AncestryChanged:Connect(function(C,D)if D==nil then B:destroy()end end)
+return B:constructor(A)end function y.constructor(A,B)A.root=B:WaitForChild('HumanoidRootPart',5)A.humanoid=B:WaitForChild('Humanoid',5)y.attached[B]=A task
 .defer(A.onStart,A)return A end function y.onStart(A)A.instance.ChildAdded:
 Connect(function(B)if B:IsA'Tool'then A:onToolAdded(B)end end)end function y.
 onToolAdded(A,B)if B.Name=='LibraryHintPaper'then if not Toggles.PADLOCK_CODE.
