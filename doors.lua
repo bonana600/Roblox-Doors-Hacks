@@ -6,8 +6,7 @@ local e=game:GetService'RunService'
 local f=game:GetService'SoundService'
 local g=game:GetService'Workspace'
 local h=game:GetService'ContentProvider'
-local i=game:GetService'CoreGui'do if getgenv().doors then return end getgenv().doors=true
-end do 
+local i=game:GetService'CoreGui'do if getgenv().doors then return end getgenv().doors=true end do 
 local j j=hookfunction(h.PreloadAsync,function(k,l,m)if table.find(l,i) then 
 local n=function(n,o)if n:match'^rbxasset://'or n:match'^rbxthumb://'then return m(n,o)end end warn'Anticheat Check Detected'return j(k,l,n)end return j(k,l,m)end)end 
 local j=[[https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/]]
@@ -23,12 +22,7 @@ local w=0
 local x=function(x,y)k:Notify(x)if y and Toggles.SOUND_NOTIFIER.Value then p.TimePosition=0.25 p:Play()end end 
 local y do y={}y.attached={}y.__index=y 
 local z=Vector3.new(1,0,1)function y.new(A)
-local B=setmetatable({instance=A,destructed=false},y)B._destroyListener=B.instance.AncestryChanged:Connect(function(C,D)if D==nil then B:destroy()end end)
-return B:constructor(A)end function y.constructor(A,B)A.root=B:WaitForChild('HumanoidRootPart',5)A.humanoid=B:WaitForChild('Humanoid',5)y.attached[B]=A task
-.defer(A.onStart,A)return A end function y.onStart(A)A.instance.ChildAdded:
-Connect(function(B)if B:IsA'Tool'then A:onToolAdded(B)end end)end function y.
-onToolAdded(A,B)if B.Name=='LibraryHintPaper'then if not Toggles.PADLOCK_CODE.
-Value then return end local C=B:WaitForChild('UI',1)if C then local D={}for E=1,
+local B=setmetatable({instance=A,destructed=false},y)B._destroyListener=B.instance.AncestryChanged:Connect(function(C,D)if D==nil then B:destroy()end end) return B:constructor(A)end function y.constructor(A,B)A.root=B:WaitForChild('HumanoidRootPart',5)A.humanoid=B:WaitForChild('Humanoid',5)y.attached[B]=A task.defer(A.onStart,A)return A end function y.onStart(A)A.instance.ChildAdded:Connect(function(B)if B:IsA'Tool'then A:onToolAdded(B)end end)end function y.onToolAdded(A,B)if B.Name=='LibraryHintPaper'then if not Toggles.PADLOCK_CODE.Value then return end local C=B:WaitForChild('UI',1)if C then local D={}for E=1,
 5 do local F=C:FindFirstChild(tostring(E),1)if F then local G=v[F.
 ImageRectOffset.X/50]if G~=nil then D[E]=G end end end local E=''for F=1,5 do
 local G=D[F]E=E..(G or'_')end k:Notify('[Code Parser]: '..E,10)end end end
