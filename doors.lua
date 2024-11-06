@@ -116,10 +116,17 @@ local K,L,M=J.label,J.indicator,J.outline if Toggles.INTERACTABLE_ESP.Value then
 local N,O=H(o,J.instance.Position)
 local P=O and N.Z>2.5 if P then
 local Q=Vector2.new(N.X,N.Y)K.Position=Q+I L.Position=Q M.Position=Q 
-local R=Options.INTERACTABLE_ESP_COLOR.Value K.Color=R L.Color=R end K.Visible=P L.Visible=P M.Visible=P else K.Visible=false L.Visible=false M.Visible=false endend function G.destroy(J)if J.destructed then return else J.destructed=true J._destroyListener:Disconnect()end G.attached[J.instance]=nil J.label:Remove()J.indicator:Remove()J.outline:Remove()end end local H do H={}H.__index=H function H.new(I)
+local R=Options.INTERACTABLE_ESP_COLOR.Value K.Color=R L.Color=R end K.Visible=P L.Visible=P M.Visible=P else K.Visible=false L.Visible=false M.Visible=false endend function G.destroy(J)if J.destructed then return else J.destructed=true J._destroyListener:Disconnect()end G.attached[J.instance]=nil J.label:Remove()J.indicator:Remove()J.outline:Remove()end end 
+local H do H={}H.__index=H function H.new(I)
 local J=setmetatable({instance=I,destructed=false},H)J._destroyListener=J.instance.AncestryChanged:Connect(function(K,L)if L==nil then J:destroy()end end)return J:constructor(I)end function H.constructor(I,J)task.defer(I.onStart,I)return I end function H.onStart(I)
 local J=I.instance if J.Name=='50'then task.defer(I.onLibrary,I)task.defer(I.onFigure,I)elseif J.Name=='100'then task.defer(I.onFigure,I)end 
-local K=function(K)I:onDescendant(K)end J.DescendantAdded:Connect(K)for L,M in ipairs(J:GetDescendants())do K(M)if L%500==0 then task.wait()end end end function H.onDescendant(I,J)local K=J.Parent if J.Name=='Main' then if K.Name=='LeverForGate'then G.new(J,'Lever')elseif K.Name=='Lighter'then F.new(J,'Lighter')elseif K.Name=='Vitamins'then F.new(J,'Vitamins')elseif K.Name=='Lockpick'then F.new(J,'Lockpicks')elseif K.Name=='Bandage'then F.new(J,'Bandages')end elseif K.Name=='Door'then if J.Name=='Door'and J:IsA'MeshPart'then D.new(K,tonumber(I.instance.Name))local L=K:FindFirstChild'Lock'if L then G.new(L,'Lock')end end elseif K.Name=='KeyObtain'then if J.Name=='Hitbox'then F.new(J,'Key')end elseif J.Name=='Wardrobe'then E.new(J,tonumber(I.instance.Name)) end end function H.onFigure(I)local J=I.instance local K=J:WaitForChild('FigureSetup',2.5)local L=B.new(K)end function H.onLibrary(I)local J=I.instance
+local K=function(K)I:onDescendant(K)end J.DescendantAdded:Connect(K)for L,M in ipairs(J:GetDescendants())do K(M)if L%500==0 then task.wait()end end end function H.onDescendant(I,J)
+local K=J.Parent if J.Name=='Main' then if K.Name=='LeverForGate'then G.new(J,'Lever')elseif K.Name=='Lighter'then F.new(J,'Lighter')elseif K.Name=='Vitamins'then F.new(J,'Vitamins')elseif K.Name=='Lockpick'then F.new(J,'Lockpicks')elseif K.Name=='Bandage'then F.new(J,'Bandages')end elseif K.Name=='Door'then if J.Name=='Door'and J:IsA'MeshPart'then D.new(K,tonumber(I.instance.Name))
+local L=K:FindFirstChild'Lock'if L then G.new(L,'Lock')end end elseif K.Name=='KeyObtain'then if J.Name=='Hitbox'then F.new(J,'Key')end elseif J.Name=='Wardrobe'then E.new(J,tonumber(I.instance.Name)) end end function H.onFigure(I)
+local J=I.instance 
+local K=J:WaitForChild('FigureSetup',2.5)
+local L=B.new(K)end function H.onLibrary(I)
+local J=I.instance
 local K=function(K)if K.Name=='Super Cool Bookshelf With Hint Book'then 
 local L=K:WaitForChild('LiveHintBook',2.5)if L then 
 local M=L:WaitForChild('Base',2.5)if M then F.new(M,'Book')end end end end 
@@ -128,109 +135,47 @@ local I=k:CreateWindow'Doors'do
 local J=I:AddTab'Gameplay'do 
 local K=J:AddLeftTabbox'Modifications'
 local L=K:AddTab'Character Mods'L:AddToggle('SPRINT_ENABLED',{Text='Sprint Enabled',Default=true,Tooltip='Enables Sprinting by pressing the Keybind'}):AddKeyPicker('SPRINT_KEYBIND',{Text='Sprint',Default='Tab'})L:AddSlider('SPRINT_BOOST',{Text='Sprint Boost (in seconds)',Min=0,Max=30,Default=20,Rounding=1,Suffix=' studs'})L:AddToggle('GLOW_ENABLED',{Text='Body Glow',Default=true,Tooltip='Adds a subtle glow for better vision'})L:AddSlider('GLOW_BRIGHTNESS',{Text='Glow Brightness',Min=0,Max=150,Default=100,Rounding=0,Suffix=''})
-local M=K:AddTab
-'World Mods'M:AddToggle('REMOVE_AMBIENCE',{Text='Remove Ambience',Default=false,
-Tooltip='Removes the unnecessary sounds from the world'})end do local K=J:
-AddLeftTabbox'Assists'local L=K:AddTab'Minigame Assists'L:AddToggle(
-'PADLOCK_CODE',{Text='Padlock Parser',Default=true,Tooltip=
-'Parses the Padlock code using your Books and Paper'})L:AddToggle('BREAKER_WIN',
-{Text='Breaker Assist',Default=true,Tooltip=
-[[Electrical breaker will be fully completed regardless of the actual state of the switches (Room 100)]]
-})L:AddToggle('AUTO_HEARTBEAT',{Text='Always Win Heartbeat Minigame',Default=
-true,Tooltip='Always win the heartbeat minigame (Room 50 & 100)'})local M=K:
-AddTab'Entity Assists'M:AddToggle('AUTO_SCREECH',{Text='Anti-Screech',Default=
-true,Tooltip='Screech attacks no longer damage you.'})end do local K=J:
-AddRightTabbox'Notifiers'local L=K:AddTab'Alerts'L:AddToggle('EVENT_NOTIFIER',{
-Text='Event Notifier',Default=true,Tooltip=
-'Notifies you when certain events occur'})L:AddToggle('DEBUG_NOTIFIER',{Text=
-'Debug Notifier',Default=true,Tooltip='Notifies you of certain script changes'})
-L:AddButton('Example Alert (Testing)',function()x(
-[[[Example Alert]: This is a test alert to get you familiar with the script's notification system!]]
-,true)end)local M=K:AddTab'Advanced'M:AddToggle('SOUND_NOTIFIER',{Text=
-'Sound Alert',Default=true,Tooltip='Important Alerts will have sound cues!'})end
-end do local J=I:AddTab'Blatant'do local K=J:AddLeftGroupbox'Prompts'K:
-AddToggle('INSTANT_PROMPT',{Text='Instant Interact',Default=true,Tooltip=
-'Instantly interacts with prompts'})K:AddToggle('AUTO_PROMPT',{Text=
-'Automatic Interact',Default=true,Tooltip='Automaticall interacts with prompts'}
-):AddKeyPicker('AUTO_PROMPT_KEYBIND',{Text='Auto-Interact',Default='V'})end end
-do local J=I:AddTab'Visuals'do local K=J:AddLeftTabbox'Visuals'local L=K:AddTab
-'Entity Visuals'L:AddToggle('RUSH_ESP',{Text='Rush/Ambush ESP',Default=true,
-Tooltip='ESP for both Rush and Ambush Entities'})L:AddToggle('FIGURE_ESP',{Text=
-'Figure ESP',Default=true,Tooltip="ESP for the entity 'Figure'"})local M=K:
-AddTab'Object Visuals'M:AddToggle('DOOR_ESP',{Text='Door ESP',Default=true,
-Tooltip='ESP for doors'}):AddColorPicker('DOOR_ESP_COLOR',{Title='ESP Color',
-Default=Color3.new(0,0.5,1)})M:AddToggle('WARDROBE_ESP',{Text='Wardrobe ESP',
-Default=true,Tooltip='ESP for Wardrobe'}):AddColorPicker('WARDROBE_ESP_COLOR',{
-Title='ESP Color',Default=Color3.new(0,1,0.9)})M:AddToggle('OBTAINABLE_ESP',{
-Text='Obtainable ESP',Default=true,Tooltip='ESP for items that can be picked up'
-}):AddColorPicker('OBTAINABLE_ESP_COLOR',{Title='ESP Color',Default=Color3.new(1
-,1,0)})M:AddToggle('INTERACTABLE_ESP',{Text='Interactable ESP',Default=true,
-Tooltip='ESP for interactable items'}):AddColorPicker('INTERACTABLE_ESP_COLOR',{
-Title='ESP Color',Default=Color3.new(1,1,1)})end do local K=J:AddRightGroupbox
-'World Render'end end do local J=I:AddTab'Credits'local K=J:AddLeftGroupbox
-'Credits'K:AddLabel'OminousVibes - Creator'K:AddLabel'Inori @v3rm - UI Library'K
-:AddLabel'Aztup @v3rm - Breaker Assist'K:AddDivider()K:AddLabel'Contributors:'K:
-AddLabel'> IAmAGoodScammer @v3rm'K:AddLabel'> Bob24 @v3rm'K:AddLabel
-'> brickmane @v3rm'K:AddLabel'> yuuiz#1336 @Discord'K:AddDivider()K:AddLabel
-'Donators:'K:AddLabel'> reversing#2937 @Discord'local L=J:AddRightGroupbox
-'Socials'L:AddButton('Discord Server',function()setclipboard
-'https://discord.gg/8PATx7UKXZ'end)end do local J=I:AddTab'Settings'm:
-SetLibrary(k)l:SetLibrary(k)m:SetFolder'OminousVibes'l:SetFolder
-'OminousVibes/doors'l:IgnoreThemeSettings()l:SetIgnoreIndexes{'MenuKeybind'}l:
-BuildConfigSection(J)m:ApplyToTab(J)local K=J:AddLeftGroupbox'Menu'K:AddButton(
-'Unload',function()k:Unload()end)K:AddLabel'Menu bind':AddKeyPicker(
-'MenuKeybind',{Default='End',NoUI=true,Text='Menu keybind'})K:AddToggle(
-'Keybinds',{Text='Show Keybinds Menu',Default=true}):OnChanged(function()k.
-KeybindFrame.Visible=Toggles.Keybinds.Value end)K:AddToggle('Watermark',{Text=
-'Show Watermark',Default=true}):OnChanged(function()k:SetWatermarkVisibility(
-Toggles.Watermark.Value)end)end end k:Notify
-'UI Built! [Right Ctrl or Right Shift]'l:LoadAutoloadConfig()do local I local J,
-K=typeof,unpack local L=game.IsA I=hookmetamethod(game,'__namecall',function(M,
-...)if not checkcaller()then if J(M)=='Instance'then if L(M,'RemoteEvent')then
-if M==u.ClutchHeartbeat then if Toggles.AUTO_HEARTBEAT.Value then local N={...}
-if not N[2]then w=(w+1)%2 if w==0 then N[2]=true else return end end return I(M,
-K(N))end elseif M==u.Screech then if Toggles.AUTO_SCREECH.Value then local N={
-...}N[1]=true return I(M,K(N))end end end end end return I(M,...)end)end local I
-=function(I,J)for K,L in pairs(y.attached)do L:onPhysics(I,J)end end local J=
-function(J)do local K=Toggles.GLOW_ENABLED.Value if K then local L=Options.
-GLOW_BRIGHTNESS.Value q.Brightness=L/100 r.Brightness=L/200 local M=o.
-CameraSubject.Parent if M then local N=M.PrimaryPart if N then q.Parent=N r.
-Parent=N end end end q.Enabled=K r.Enabled=K end for K,L in pairs(z.attached)do
-L:render(J)end for M,N in pairs(B.attached)do N:render(J)end for O,P in pairs(C.
-attached)do P:render(J)end for Q,R in pairs(D.attached)do R:render(J)end for S,T
-in pairs(E.attached)do T:render(J)end for U,V in pairs(G.attached)do V:render(J)
-end for W,X in pairs(F.attached)do X:render(J)end end local W=function(W)if
-Toggles.EVENT_NOTIFIER.Value then local X=s.ChaseStart.Value-W if 0<X and X<3
-then x("[Event Notifier]: There is an event in '"..tostring(X).."' rooms!",false
-)end end end local X=function()if Toggles.EVENT_NOTIFIER.Value then x(
-[[[Event Notifier]: Screech spawned, quickly turn around to look at it!]],true)
-end end local aa=function(Y)if Y=='ElevatorBreaker'then local Z do local _,aa=
-type,table.find local ab=is_synapse_function or iskrnlclosure repeat task.wait(
-0.5)for ac,ad in ipairs(getgc())do if _(ad)=='function'and islclosure(ad)and not
-ab(ad)then local ae=getconstants(ad)if aa(ae,'BreakerSwitch')and aa(ae,
-'GetChildren')and ae[9]==1 then if Toggles.DEBUG_NOTIFIER.Value then x(
-'Breaker Switch found!',true)end Z=ad break end end if ac%500==0 then task.wait(
-)end end until Z~=nil end local aa aa=hookfunction(Z,function(...)if Toggles.
-BREAKER_WIN.Value then return 10 end return aa(...)end)end end local ab=function
-(ab)A.new(ab)end local ac=function(ac)y.new(ac)end local ad=function(ad)if ad.
-Name=='RushMoving'then if Toggles.EVENT_NOTIFIER.Value then x(
-'[Event Notifier]: Rush spawned, hide quickly!',true)end C.new(ad)elseif ad.Name
-=='AmbushMoving'then if Toggles.EVENT_NOTIFIER.Value then x(
-[[[Event Notifier]: Ambush spawned, hide quickly! He can return up to 3-4 times!]]
-,true)end C.new(ad)elseif ad.Name=='Lookman'then if Toggles.EVENT_NOTIFIER.Value
-then x('[Event Notifier]: Eyes spawned, look away!',true)end end end local ae=
-function(ae)H.new(ae)end e.Stepped:Connect(I)e.RenderStepped:Connect(J)b.
-PlayerAdded:Connect(ab)n.CharacterAdded:Connect(ac)g.ChildAdded:Connect(ad)g.
-CurrentRooms.ChildAdded:Connect(ae)s.LatestRoom.Changed:Connect(W)u.Screech.
-OnClientEvent:Connect(X)u.EngageMinigame.OnClientEvent:Connect(aa)u.PadlockHint.
-OnClientEvent:Connect(function(Y,Z,_)if Y and Z then v[Y]=tostring(Z)else v={}
-end end)if n.Character then task.defer(ac,n.Character)end for Y,Z in ipairs(b:
-GetPlayers())do if Z~=n then task.defer(ab,Z)end end for _,af in ipairs(g.
-CurrentRooms:GetChildren())do task.defer(ae,af)end g:GetPropertyChangedSignal
-'CurrentCamera':Connect(function()local ag=g.CurrentCamera if ag then o=ag end
-end)c.PromptButtonHoldBegan:Connect(function(ag,ah)if Toggles.INSTANT_PROMPT.
-Value then task.spawn(fireproximityprompt,ag)end end)c.PromptShown:Connect(
-function(ag,ah)if Toggles.AUTO_PROMPT.Value and Options.AUTO_PROMPT_KEYBIND:
-GetState()then task.spawn(fireproximityprompt,ag)end end)p.Name=a:GenerateGUID(
-false)p.SoundId='rbxassetid://6026984224'p.Volume=6 p.Parent=f q.Range=40 r.
-Range=200 return k:Notify'[Doors] Loaded! (v4)'
+local M=K:AddTab'World Mods'M:AddToggle('REMOVE_AMBIENCE',{Text='Remove Ambience',Default=false,Tooltip='Removes the unnecessary sounds from the world'})end do 
+local K=J:AddLeftTabbox'Assists'
+local L=K:AddTab'Minigame Assists'L:AddToggle('PADLOCK_CODE',{Text='Padlock Parser',Default=true,Tooltip='Parses the Padlock code using your Books and Paper'})L:AddToggle('BREAKER_WIN',{Text='Breaker Assist',Default=true,Tooltip=[[Electrical breaker will be fully completed regardless of the actual state of the switches (Room 100)]]})L:AddToggle('AUTO_HEARTBEAT',{Text='Always Win Heartbeat Minigame',Default=true,Tooltip='Always win the heartbeat minigame (Room 50 & 100)'})
+local M=K:AddTab'Entity Assists'M:AddToggle('AUTO_SCREECH',{Text='Anti-Screech',Default=true,Tooltip='Screech attacks no longer damage you.'})end do 
+local K=J:AddRightTabbox'Notifiers'
+local L=K:AddTab'Alerts'L:AddToggle('EVENT_NOTIFIER',{Text='Event Notifier',Default=true,Tooltip='Notifies you when certain events occur'})L:AddToggle('DEBUG_NOTIFIER',{Text='Debug Notifier',Default=true,Tooltip='Notifies you of certain script changes'}) L:AddButton('Example Alert (Testing)',function()x([[[Example Alert]: This is a test alert to get you familiar with the script's notification system!]],true)end)
+local M=K:AddTab'Advanced'M:AddToggle('SOUND_NOTIFIER',{Text='Sound Alert',Default=true,Tooltip='Important Alerts will have sound cues!'})end end do 
+local J=I:AddTab'Blatant'do 
+local K=J:AddLeftGroupbox'Prompts'K:AddToggle('INSTANT_PROMPT',{Text='Instant Interact',Default=true,Tooltip='Instantly interacts with prompts'})K:AddToggle('AUTO_PROMPT',{Text='Automatic Interact',Default=true,Tooltip='Automaticall interacts with prompts'}):AddKeyPicker('AUTO_PROMPT_KEYBIND',{Text='Auto-Interact',Default='V'})end end do 
+local J=I:AddTab'Visuals'do 
+local K=J:AddLeftTabbox'Visuals'
+local L=K:AddTab'Entity Visuals'L:AddToggle('RUSH_ESP',{Text='Rush/Ambush ESP',Default=true,Tooltip='ESP for both Rush and Ambush Entities'})L:AddToggle('FIGURE_ESP',{Text='Figure ESP',Default=true,Tooltip="ESP for the entity 'Figure'"})
+local M=K:AddTab'Object Visuals'M:AddToggle('DOOR_ESP',{Text='Door ESP',Default=true,Tooltip='ESP for doors'}):AddColorPicker('DOOR_ESP_COLOR',{Title='ESP Color',Default=Color3.new(0,0.5,1)})M:AddToggle('WARDROBE_ESP',{Text='Wardrobe ESP',Default=true,Tooltip='ESP for Wardrobe'}):AddColorPicker('WARDROBE_ESP_COLOR',{Title='ESP Color',Default=Color3.new(0,1,0.9)})M:AddToggle('OBTAINABLE_ESP',{Text='Obtainable ESP',Default=true,Tooltip='ESP for items that can be picked up'}):AddColorPicker('OBTAINABLE_ESP_COLOR',{Title='ESP Color',Default=Color3.new(1,1,0)})M:AddToggle('INTERACTABLE_ESP',{Text='Interactable ESP',Default=true,Tooltip='ESP for interactable items'}):AddColorPicker('INTERACTABLE_ESP_COLOR',{Title='ESP Color',Default=Color3.new(1,1,1)})end do 
+local K=J:AddRightGroupbox'World Render'end end do 
+local J=I:AddTab'Credits'
+local K=J:AddLeftGroupbox'Credits'K:AddLabel'OminousVibes - Creator'K:AddLabel'Inori @v3rm - UI Library'K:AddLabel'Aztup @v3rm - Breaker Assist'K:AddDivider()K:AddLabel'Contributors:'K:AddLabel'> IAmAGoodScammer @v3rm'K:AddLabel'> Bob24 @v3rm'K:AddLabel'> brickmane @v3rm'K:AddLabel'> yuuiz#1336 @Discord'K:AddDivider()K:AddLabel'Donators:'K:AddLabel'> reversing#2937 @Discord'
+local L=J:AddRightGroupbox'Socials'L:AddButton('Discord Server',function()setclipboard'https://discord.gg/8PATx7UKXZ'end)end do 
+local J=I:AddTab'Settings'm:SetLibrary(k)l:SetLibrary(k)m:SetFolder'OminousVibes'l:SetFolder'OminousVibes/doors'l:IgnoreThemeSettings()l:SetIgnoreIndexes{'MenuKeybind'}l:BuildConfigSection(J)m:ApplyToTab(J)
+local K=J:AddLeftGroupbox'Menu'K:AddButton('Unload',function()k:Unload()end)K:AddLabel'Menu bind':AddKeyPicker('MenuKeybind',{Default='End',NoUI=true,Text='Menu keybind'})K:AddToggle('Keybinds',{Text='Show Keybinds Menu',Default=true}):OnChanged(function()k.KeybindFrame.Visible=Toggles.Keybinds.Value end)K:AddToggle('Watermark',{Text='Show Watermark',Default=true}):OnChanged(function()k:SetWatermarkVisibility(Toggles.Watermark.Value)end)end end k:Notify'UI Built! [Right Ctrl or Right Shift]'l:LoadAutoloadConfig()do 
+local I 
+local J,K=typeof,unpack 
+local L=game.IsA I=hookmetamethod(game,'__namecall',function(M,...)if not checkcaller()then if J(M)=='Instance'then if L(M,'RemoteEvent')then if M==u.ClutchHeartbeat then if Toggles.AUTO_HEARTBEAT.Value then 
+local N={...}if not N[2]then w=(w+1)%2 if w==0 then N[2]=true else return end end return I(M,K(N))end elseif M==u.Screech then if Toggles.AUTO_SCREECH.Value then 
+local N={...}N[1]=true return I(M,K(N))end end end end end return I(M,...)end)end 
+local I=function(I,J)for K,L in pairs(y.attached)do L:onPhysics(I,J)end end 
+local J=function(J)do
+local K=Toggles.GLOW_ENABLED.Value if K then 
+local L=Options.GLOW_BRIGHTNESS.Value q.Brightness=L/100 r.Brightness=L/200
+local M=o.CameraSubject.Parent if M then 
+local N=M.PrimaryPart if N then q.Parent=N r.Parent=N end end end q.Enabled=K r.Enabled=K end for K,L in pairs(z.attached)do L:render(J)end for M,N in pairs(B.attached)do N:render(J)end for O,P in pairs(C.attached)do P:render(J)end for Q,R in pairs(D.attached)do R:render(J)end for S,T in pairs(E.attached)do T:render(J)end for U,V in pairs(G.attached)do V:render(J) end for W,X in pairs(F.attached)do X:render(J)end end 
+local W=function(W)if Toggles.EVENT_NOTIFIER.Value then 
+local X=s.ChaseStart.Value-W if 0<X and X<3 then x("[Event Notifier]: There is an event in '"..tostring(X).."' rooms!",false)end end end 
+local X=function()if Toggles.EVENT_NOTIFIER.Value then x([[[Event Notifier]: Screech spawned, quickly turn around to look at it!]],true) end end 
+local aa=function(Y)if Y=='ElevatorBreaker'then 
+local Z do 
+local _,aa=type,table.find
+local ab=is_synapse_function or iskrnlclosure repeat task.wait(0.5)for ac,ad in ipairs(getgc())do if _(ad)=='function'and islclosure(ad)and not ab(ad)then 
+local ae=getconstants(ad)if aa(ae,'BreakerSwitch')and aa(ae,'GetChildren')and ae[9]==1 then if Toggles.DEBUG_NOTIFIER.Value then x('Breaker Switch found!',true)end Z=ad break end end if ac%500==0 then task.wait()end end until Z~=nil end 
+local aa aa=hookfunction(Z,function(...)if Toggles.BREAKER_WIN.Value then return 10 end return aa(...)end)end end 
+local ab=function(ab)A.new(ab)end 
+local ac=function(ac)y.new(ac)end 
+local ad=function(ad)if ad.Name=='RushMoving'then if Toggles.EVENT_NOTIFIER.Value then x('[Event Notifier]: Rush spawned, hide quickly!',true)end C.new(ad)elseif ad.Name=='AmbushMoving'then if Toggles.EVENT_NOTIFIER.Value then x([[[Event Notifier]: Ambush spawned, hide quickly! He can return up to 3-4 times!]],true)end C.new(ad)elseif ad.Name=='Lookman'then if Toggles.EVENT_NOTIFIER.Value then x('[Event Notifier]: Eyes spawned, look away!',true)end end end 
+local ae=function(ae)H.new(ae)end e.Stepped:Connect(I)e.RenderStepped:Connect(J)b.PlayerAdded:Connect(ab)n.CharacterAdded:Connect(ac)g.ChildAdded:Connect(ad)g.CurrentRooms.ChildAdded:Connect(ae)s.LatestRoom.Changed:Connect(W)u.Screech.OnClientEvent:Connect(X)u.EngageMinigame.OnClientEvent:Connect(aa)u.PadlockHint.OnClientEvent:Connect(function(Y,Z,_)if Y and Z then v[Y]=tostring(Z)else v={}end end)if n.Character then task.defer(ac,n.Character)end for Y,Z in ipairs(b:GetPlayers())do if Z~=n then task.defer(ab,Z)end end for _,af in ipairs(g.CurrentRooms:GetChildren())do task.defer(ae,af)end g:GetPropertyChangedSignal'CurrentCamera':Connect(function()
+local ag=g.CurrentCamera if ag then o=ag end end)c.PromptButtonHoldBegan:Connect(function(ag,ah)if Toggles.INSTANT_PROMPT.Value then task.spawn(fireproximityprompt,ag)end end)c.PromptShown:Connect( function(ag,ah)if Toggles.AUTO_PROMPT.Value and Options.AUTO_PROMPT_KEYBIND:GetState()then task.spawn(fireproximityprompt,ag)end end)p.Name=a:GenerateGUID(false)p.SoundId='rbxassetid://6026984224'p.Volume=6 p.Parent=f q.Range=40 r.Range=200 return k:Notify'[Doors] Loaded! (v4)'
